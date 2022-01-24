@@ -143,11 +143,9 @@ for component_match in component_matches:
             
             new_instructions += '\n'
 
-
         instructions_part = re.sub(component_instruction_match.group(0), new_instructions, instructions_part, 0, re.MULTILINE)
-        print(instructions_part)
 
-# remove empty lines and comments and turn insructions into a list
+# turn instructions into a list
 instructions = list(filter(lambda line: line != '', instructions_part.split('\n')))
 
 for instruction in instructions:

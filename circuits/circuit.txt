@@ -6,5 +6,5 @@
 INPUT a
 INPUT b
 
-XOR a:b c
-XNOR a:b c
+XOR a:b a_XOR_b
+XNOR a:b a_XNOR_b
