@@ -1,0 +1,13 @@
+// standard library
+
+XOR {
+  AND $0:$1 c
+  NOR $0:$1 d
+  NOR c:d $$
+}
+
+XNOR {
+  AND $0:$1 c
+  NOR $0:$1 d
+  OR c:d $$
+}

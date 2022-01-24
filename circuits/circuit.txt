@@ -1,0 +1,10 @@
+// simple XOR program
+
+-----
+
+// the two levers
+INPUT a
+INPUT b
+
+XOR a:b c
+XNOR a:b c
