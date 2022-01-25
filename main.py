@@ -218,7 +218,7 @@ pt.keyUp('command') # reset the command key just in case
 pt.keyUp('shift') # reset the shift key just in case
 
 send_chat_message(f'Started at {datetime.now()}')
-send_chat_message('gamemode sp', command=True)
+send_chat_message('gamemode spectator', command=True)
 send_chat_message('gamerule doTileDrops false', command=True) # make it not drop the items when editing the lines
 
 # Make the main lines
@@ -284,5 +284,5 @@ for i, s in enumerate(secondary_lines):
 
 send_chat_message('gamerule doTileDrops true', command=True)
 send_chat_message(f'Ended at {datetime.now()}')
-send_chat_message('gamemode c', command=True)
+send_chat_message('gamemode creative', command=True)
 
