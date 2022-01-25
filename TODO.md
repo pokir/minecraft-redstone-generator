@@ -9,6 +9,3 @@
 - Named component parameters (instead of $)
 - Way to minimize useless repetition in components (reuse previous lines?)
 - Use repeaters or copy lines
-- Chat message cache (to use up arrow instead of typing it all out)
-  - Or copy paste
-  - Or schematic
