@@ -14,3 +14,4 @@
 - Improve syntax
 - Make it work for latest minecraft version
 - Recursive components
+- Remove # from variable name if it is being called again from a different component (dont do a#0#1#2)

@@ -51,7 +51,7 @@ def back_to_game():
 def send_chat_message(message, command=False):
     pt.press('/' if command else 't')
     xerox.copy(message)
-    pt.hotkey(CTRL_KEY, 'v', interval=0.02)
+    pt.hotkey(CTRL_KEY, 'v', interval=0.025)
     pt.press('enter')
 
 
@@ -92,64 +92,74 @@ for file_path in os.listdir('component_libs'):
     with open(os.path.join('component_libs', file_path), 'r') as f:
         components_part = f.read() + components_part
 
-component_matches = re.finditer(r'^([A-Z0-9_]+)\s+{((?:.|\s)*?)}', components_part, re.MULTILINE)
+component_matches = list(re.finditer(r'^([A-Z0-9_]+)\s+{((?:.|\s)*?)}', components_part, re.MULTILINE))
 
 # replace components with instructions
 # for each component function
-for component_match in component_matches:
-    component_name = component_match.group(1)
+continue_replacing = True
+while continue_replacing:
+    continue_replacing = False
 
-    component_instructions = map(lambda x: x.strip(), component_match.group(2).strip().split('\n'))
-    component_instructions = map(lambda x: x.split(' '), component_instructions)
-    component_instructions = map(lambda x: x[:1] + [x[1].split(':')] + x[2:], component_instructions)
-    component_instructions = list(component_instructions)
+    # for every component that was created in the components section
+    for component_match in component_matches:
+        component_name = component_match.group(1)
 
-    # find each call to the component function in the main code
-    component_instruction_matches = re.finditer(rf'^[ \t]*{component_name}\s+(.+?)\s+(.+?)$', instructions_part, re.MULTILINE)
-    for component_instruction_match in component_instruction_matches:
-        input_names = component_instruction_match.group(1).split(':')
-        output_name = component_instruction_match.group(2)
+        component_instructions = map(lambda x: x.strip(), component_match.group(2).strip().split('\n'))
+        component_instructions = map(lambda x: x.split(' '), component_instructions)
+        component_instructions = map(lambda x: x[:1] + [x[1].split(':')] + x[2:], component_instructions)
+        component_instructions = list(component_instructions)
 
-        # and replace it with the function
-        # TODO: make it so all variables are unique throughout the code, otherwise it can create problems
-        component_vars = {}
-        new_instructions = ''
-        for component_instruction in component_instructions:
-            # create the new instruction, replacing variable names
-            new_instructions += component_instruction[0]
-            
-            # input vars
-            new_inputs = []
-            for component_var in component_instruction[1]:
-                if component_var == '$$':
-                    new_inputs.append(output_name)
-                elif component_var[0] == '$':
-                    new_inputs.append(input_names[int(component_var[1:])])
-                else: # it's a local component function variable
-                    if component_var not in component_vars:
-                        component_vars[component_var] = f'{component_var}#{custom_var_counter}'
-                        custom_var_counter += 1
-                    new_inputs.append(component_vars[component_var])
+        # find each call to the component function in the main code (instructions part)
+        component_instruction_matches = list(re.finditer(rf'^[ \t]*{component_name}\s+(.+?)\s+(.+?)$', instructions_part, re.MULTILINE))
 
-            new_instructions += ' ' + ':'.join(new_inputs) + ' '
+        if len(component_instruction_matches) > 0:
+            # if a component call was found, then replace again in case other components were called inside of it
+            continue_replacing = True
 
-            # output vars
-            if len(component_instruction) == 3:
-                component_var = component_instruction[2]
-                # TODO: make this DRY
-                if component_var == '$$':
-                    new_instructions += output_name
-                elif component_var[0] == '$':
-                    new_instructions += input_names[int(component_var[1:])]
-                else: # it's a local component function variable
-                    if component_var not in component_vars:
-                        component_vars[component_var] = f'{component_var}#{custom_var_counter}'
-                        custom_var_counter += 1
-                    new_instructions += component_vars[component_var]
-            
-            new_instructions += '\n'
+        for component_instruction_match in component_instruction_matches:
+            input_names = component_instruction_match.group(1).split(':')
+            output_name = component_instruction_match.group(2)
 
-        instructions_part = re.sub(component_instruction_match.group(0), new_instructions, instructions_part, 0, re.MULTILINE)
+            # and replace it with the function
+            # TODO: make it so all variables are unique throughout the code, otherwise it can create problems
+            component_vars = {}
+            new_instructions = ''
+            for component_instruction in component_instructions:
+                # create the new instruction, replacing variable names
+                new_instructions += component_instruction[0]
+                
+                # input vars
+                new_inputs = []
+                for component_var in component_instruction[1]:
+                    if component_var == '$$':
+                        new_inputs.append(output_name)
+                    elif component_var[0] == '$':
+                        new_inputs.append(input_names[int(component_var[1:])])
+                    else: # it's a local component function variable
+                        if component_var not in component_vars:
+                            component_vars[component_var] = f'{component_var}#{custom_var_counter}'
+                            custom_var_counter += 1
+                        new_inputs.append(component_vars[component_var])
+
+                new_instructions += ' ' + ':'.join(new_inputs) + ' '
+
+                # output vars
+                if len(component_instruction) == 3:
+                    component_var = component_instruction[2]
+                    # TODO: make this DRY
+                    if component_var == '$$':
+                        new_instructions += output_name
+                    elif component_var[0] == '$':
+                        new_instructions += input_names[int(component_var[1:])]
+                    else: # it's a local component function variable
+                        if component_var not in component_vars:
+                            component_vars[component_var] = f'{component_var}#{custom_var_counter}'
+                            custom_var_counter += 1
+                        new_instructions += component_vars[component_var]
+                
+                new_instructions += '\n'
+
+            instructions_part = re.sub(component_instruction_match.group(0), new_instructions, instructions_part, 0, re.MULTILINE)
 
 # turn instructions into a list
 instructions = list(filter(lambda line: line != '', instructions_part.split('\n')))

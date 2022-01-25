@@ -1,0 +1,12 @@
+
+WASD {
+  XOR $0:$1 a
+  NOT a $$
+}
+
+-----
+
+INPUT a
+INPUT b
+
+WASD a:b a_XNOR_b
