@@ -83,7 +83,7 @@ In order to use components, call them the same way.
 
 Native instructions are:
 - INPUT
-- OUTPUT (work in progress)
+- OUTPUT
 - NOT 
 - OR
 - NOR
