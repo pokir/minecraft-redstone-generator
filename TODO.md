@@ -12,3 +12,4 @@
 - Make it work on linux and windows
 - Multiple return values for components
 - Improve syntax
+- Make it work for latest minecraft version
