@@ -8,3 +8,6 @@ INPUT b
 
 XOR a:b a_XOR_b
 XNOR a:b a_XNOR_b
+
+OUTPUT a_XOR_b
+OUTPUT a_XNOR_b
