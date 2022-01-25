@@ -5,6 +5,7 @@ import pyautogui as pt
 import re
 import sys
 from time import sleep
+import xerox
 
 
 '''
@@ -47,7 +48,9 @@ def back_to_game():
 
 def send_chat_message(message, command=False):
     pt.press('/' if command else 't')
-    pt.write(message + '\n')
+    xerox.copy(message)
+    pt.hotkey('command', 'v', interval=0.02)
+    pt.press('enter')
 
 
 def format_coordinates(x, y, z):

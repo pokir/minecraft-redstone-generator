@@ -98,3 +98,4 @@ PyRect==0.1.4
 PyScreeze==0.1.28
 pytweening==1.0.4
 rubicon-objc==0.4.2
+xerox==0.4.1
