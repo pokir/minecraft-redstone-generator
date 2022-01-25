@@ -21,6 +21,8 @@ DIAGONAL_SPRINT_SPEED = sqrt(pow(SPRINT_SPEED, 2) + pow(WALK_SPEED, 2)) # only s
 LOGIC_GATES = ['NOT', 'OR', 'NOR', 'AND', 'NAND', 'XOR', 'XNOR']
 #ALL_INSTRUCTIONS = LOGIC_GATES + ['INPUT', 'OUTPUT']
 
+CTRL_KEY = 'command' if sys.platform == 'darwin' else 'ctrl'
+
 
 def find_by_condition(func, array):
     # Finds all indexes and values in array that pass func
@@ -49,7 +51,7 @@ def back_to_game():
 def send_chat_message(message, command=False):
     pt.press('/' if command else 't')
     xerox.copy(message)
-    pt.hotkey('command', 'v', interval=0.02)
+    pt.hotkey(CTRL_KEY, 'v', interval=0.02)
     pt.press('enter')
 
 
@@ -214,7 +216,7 @@ sleep(3)
 
 back_to_game()
 
-pt.keyUp('command') # reset the command key just in case
+pt.keyUp(CTRL_KEY) # reset the command key just in case
 pt.keyUp('shift') # reset the shift key just in case
 
 send_chat_message(f'Started at {datetime.now()}')
