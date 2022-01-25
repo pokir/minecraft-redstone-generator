@@ -9,3 +9,4 @@
 - Named component parameters (instead of $)
 - Way to minimize useless repetition in components (reuse previous lines?)
 - Use repeaters or copy lines
+- Make it work on linux and windows
