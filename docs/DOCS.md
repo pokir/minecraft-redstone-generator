@@ -12,7 +12,7 @@ You must be using python3.
 
 Install the required dependencies:
 
-```py
+```sh
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
@@ -20,13 +20,13 @@ pip install -r requirements.txt
 
 Run your code:
 
-```py
+```sh
 python3 main.py /path/to/your/circuit.txt
 ```
 
 Example:
 
-```py
+```sh
 python3 main.py circuits/xor.py
 ```
 
