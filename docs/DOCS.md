@@ -1,10 +1,12 @@
-# Setting up minecraft
+# Documentation
+
+## Setting up minecraft
 
 In order to use this tool, you must be in minecraft 1.8.9, in creative mode, with access to vanilla commands.
 
 Move to where you want to build the redstone build in the world, then enter the pause screen and start the program.
 
-# Running
+## Running
 
 You must be using python3.
 
@@ -28,7 +30,7 @@ Example:
 python3 main.py circuits/xor.py
 ```
 
-# Syntax
+## Syntax
 
 Each program is in two sections:
 - First the components section
@@ -38,7 +40,7 @@ The sections must be separated by `-----` (5 hyphens), even if one of the sectio
 
 Comments can be made using `//`.
 
-## Components
+### Components
 
 In order to create a component in the components section, use this syntax:
 
@@ -63,7 +65,7 @@ XOR {
 
 The components are then used in the instructions section.
 
-### Standard library
+#### Standard library
 
 Components in the standard library are:
 - XOR
@@ -71,7 +73,7 @@ Components in the standard library are:
 
 The standard library can be found in the `component_libs/` folder.
 
-## Instructions
+### Instructions
 
 Each instruction must start with its name, followed by a list of inputs separated by `:` (colons).
 
