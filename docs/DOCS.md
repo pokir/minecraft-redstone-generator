@@ -39,7 +39,7 @@ It will sleep for 3 seconds before starting, to allow time to focus the minecraf
 Example:
 
 ```sh
-python3 main.py circuits/xor.py
+python3 main.py examples/xor.py
 ```
 
 ## Syntax
