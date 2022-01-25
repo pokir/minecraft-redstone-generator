@@ -6,6 +6,16 @@ In order to use this tool, you must be in minecraft 1.8.9, in creative mode, wit
 
 Move to where you want to build the redstone build in the world, then enter the pause screen and start the program.
 
+### Back to game button
+
+If you are using a different texture pack, put both the normal and highlighted version of the minecraft back to game button in the `images folder`.
+
+They must be cropped exactly.
+
+The normal button must be named `back_to_game_normal.png`.
+
+The highlighted button must be named `back_to_game_highlighted.png`
+
 ## Running
 
 You must be using python3.
@@ -23,6 +33,8 @@ Run your code:
 ```sh
 python3 main.py /path/to/your/circuit.txt
 ```
+
+It will sleep for 3 seconds before starting, to allow time to focus the minecraft window.
 
 Example:
 
