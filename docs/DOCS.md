@@ -47,7 +47,7 @@ In order to create a component in the components section, use this syntax:
 ```
 COMPONENT_NAME {
   // instructions here
-  // in order to access the inputs, use $ then the index (starting at 0)
+  // in order to access the inputs, use $ then the index ($0, $1, $2, etc.)
   // in order to return a value into the ouput, use $$
 }
 ```
