@@ -18,7 +18,7 @@ DIAGONAL_SPRINT_SPEED = sqrt(pow(SPRINT_SPEED, 2) + pow(WALK_SPEED, 2)) # only s
 '''
 
 LOGIC_GATES = ['NOT', 'OR', 'NOR', 'AND', 'NAND', 'XOR', 'XNOR']
-NATIVE_INSTRUCTIONS = LOGIC_GATES + ['INPUT', 'OUTPUT']
+#ALL_INSTRUCTIONS = LOGIC_GATES + ['INPUT', 'OUTPUT']
 
 
 def find_by_condition(func, array):
@@ -89,6 +89,7 @@ for file_path in os.listdir('component_libs'):
 
 component_matches = re.finditer(r'^([A-Z0-9_]+)\s+{((?:.|\s)*?)}', components_part, re.MULTILINE)
 
+# replace components with instructions
 # for each component function
 for component_match in component_matches:
     component_name = component_match.group(1)
@@ -152,10 +153,14 @@ for instruction in instructions:
     # add a redstone line for every output
     args = instruction.split()
     
+    if args[0] == 'OUTPUT':
+        main_lines[args[1]]['display_output'] = True
+        continue
+
     main_lines[args[-1]] = {
         'name': args[-1],
-        #'inputs': args[1].split(':') if args[0] in LOGIC_GATES else None,
-        'type': 'input' if args[0] == 'INPUT' else 'gate_output' if args[0] in LOGIC_GATES else 'display_output' if args[0] == 'OUTPUT' else None,
+        'type': 'input' if args[0] == 'INPUT' else 'gate_output' if args[0] in LOGIC_GATES else None,
+        'display_output': False,
         # unknown start and end
         'start': 0,
         'end': 0
@@ -222,10 +227,11 @@ for i, m in enumerate(main_lines):
     if main_lines[m]['type'] == 'input':
         set_block(i * 2, 2, main_lines[m]['start'] * 2 - 1, 'redstone_lamp')
         set_block(i * 2, 2, main_lines[m]['start'] * 2 - 2, 'lever', 4)
-    elif main_lines[m]['type'] == 'display_output':
-        set_block(i * 2, 1, main_lines[m]['end'] * 2 + 2, 'redstone_lamp')
-    elif main_lines[m]['type'] == 'gate_output':
-        pass
+
+    if main_lines[m]['display_output']:
+        set_block(i * 2, 1, main_lines[m]['end'] * 2 + 3, 'redstone_lamp')
+    #elif main_lines[m]['type'] == 'gate_output':
+    #    pass
 
 
 # Make the secondary lines
