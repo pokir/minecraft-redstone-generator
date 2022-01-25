@@ -13,5 +13,5 @@
 - Multiple return values for components
 - Improve syntax
 - Make it work for latest minecraft version
-- Recursive components
+- Recursive components/looping
 - Remove # from variable name if it is being called again from a different component (dont do a#0#1#2)
