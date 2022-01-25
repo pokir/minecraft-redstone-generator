@@ -13,3 +13,4 @@
 - Multiple return values for components
 - Improve syntax
 - Make it work for latest minecraft version
+- Recursive components
