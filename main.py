@@ -88,8 +88,8 @@ with open(sys.argv[1], 'r') as f:
 components_part, instructions_part = raw_code.split('-----')
 
 # load pre-made components
-for file_path in os.listdir('component_libs'):
-    with open(os.path.join('component_libs', file_path), 'r') as f:
+for file_path in os.listdir('libs'):
+    with open(os.path.join('libs', file_path), 'r') as f:
         components_part = f.read() + components_part
 
 component_matches = list(re.finditer(r'^([A-Z0-9_]+)\s+{((?:.|\s)*?)}', components_part, re.MULTILINE))
